@@ -3,3 +3,23 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.LightGrid {
+  margin: 10px auto;
+  width: 200px;
+}
+
+.LightSquare {
+  display: inline-block;
+  margin: 5px;
+  height: 40px;
+  width: 40px;
+}
+
+.light-on {
+  background-color: green;
+}
+
+.light-off {
+  background-color: red;
+}
