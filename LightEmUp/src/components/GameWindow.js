@@ -6,17 +6,41 @@ export default class GameWindow extends Component {
     super();
 
     this.state = {
+      winState: false,
       lightState: Array(16).fill(false)
     };
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (!prevState.winState) this.checkForWinState();
+  }
+  getLightNeighbors(target) {
+    let lightNeighbors = [target];
+    if (target > 3) lightNeighbors.push(target-4);
+    if (target < 12) lightNeighbors.push(target+4);
+    if ((target % 4) > 0) lightNeighbors.push(target-1);
+    if ((target % 4) < 3) lightNeighbors.push(target+1);
+    return lightNeighbors;
+  }
   toggleLight(index) {
+    let changedLights = [].concat(this.getLightNeighbors(index));
+    console.log(changedLights);
     let newState = this.state.lightState.slice();
-    newState[index] = !newState[index];
+
+    for (let light of changedLights) {
+      newState[light] = !newState[light];
+    }
+
     this.setState({ lightState: newState });
   }
+  checkForWinState() {
+    let youWon = this.state.lightState.slice().every(light => light);
+    console.log("Did we win? " + youWon);
+    if (youWon) this.setState({ winState: true });
+  }
   render() {
-    return (
-      <div className="GameWindow">
+    let currentScreen = (this.state.winState)
+      ? <div>YOU WON!</div>
+      : (
         <div className="LightGrid">
           {
             this.state.lightState.map((isOn,i) =>
@@ -26,6 +50,10 @@ export default class GameWindow extends Component {
             )
           }
         </div>
+      );
+    return (
+      <div className="GameWindow">
+        {currentScreen}
       </div>
     );
   }
