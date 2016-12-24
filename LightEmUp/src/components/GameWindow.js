@@ -15,15 +15,17 @@ export default class GameWindow extends Component {
   }
   getLightNeighbors(target) {
     let lightNeighbors = [target];
+
+    // could just hard code a switch statement for performance
     if (target > 3) lightNeighbors.push(target-4);
     if (target < 12) lightNeighbors.push(target+4);
     if ((target % 4) > 0) lightNeighbors.push(target-1);
     if ((target % 4) < 3) lightNeighbors.push(target+1);
+
     return lightNeighbors;
   }
   toggleLight(index) {
     let changedLights = [].concat(this.getLightNeighbors(index));
-    console.log(changedLights);
     let newState = this.state.lightState.slice();
 
     for (let light of changedLights) {
@@ -34,7 +36,6 @@ export default class GameWindow extends Component {
   }
   checkForWinState() {
     let youWon = this.state.lightState.slice().every(light => light);
-    console.log("Did we win? " + youWon);
     if (youWon) this.setState({ winState: true });
   }
   render() {
