@@ -17,9 +17,9 @@ body {
 }
 
 .light-on {
-  background-color: green;
+  background-color: lightblue;
 }
 
 .light-off {
-  background-color: red;
+  background-color: #E5F5F5;
 }
